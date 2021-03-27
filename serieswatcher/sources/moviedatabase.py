@@ -19,7 +19,7 @@ class MovieDatabase(BaseSource):
         print('Find: ', query)
         querystring = {"s": query, "page": "1", "r": "json"}
         headers = {
-            'x-rapidapi-key': "cad95527d6mshc0aee4b3db3f80bp17704cjsnc79d7d8e21f6",
+            'x-rapidapi-key': "test-key",
             'x-rapidapi-host': "movie-database-imdb-alternative.p.rapidapi.com"
         }
         response = requests.request("GET", self.api['url'], headers=headers, params=querystring)
