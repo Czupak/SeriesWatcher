@@ -1,6 +1,4 @@
 import os
-import glob
-import re
 from difflib import SequenceMatcher
 from pprint import pprint
 
@@ -15,31 +13,30 @@ def get_files(subdir):
     return files
 
 
+def similar(a, b):
+    p = round(SequenceMatcher(None, a, b).ratio(), 2)
+    return p
+
+
 class Collection:
     def __init__(self, path):
         self.path = path
         self.files = []
         self.collection = {}
         self.scan()
-        self.map = {'The.End.of.the.F...ing.World': 'The End of the F...ing World',
-                    'The.Drew.Carey.Show.Complete.DVDRip.XviD-ST': 'The Drew Carey Show',
-                    'The.A-TEAM.1983.S01-S05.iNTERNAL.DVDRip.x264-DEUTERiUM': 'The A-TEAM',
-                    'Stargate.SG-1.S02.PACK.PL.1080p.WEBRiP.x264-PTRG': 'Stargate SG-1',
-                    'Sliders.S01-S05.iNTERNAL.DVDRip.x264-SCENE': 'Sliders',
-                    'Mythic Quest - Ravens Banquet (2020) S01 REPACK (1080p ATVP Webrip x265 10bit EAC3 5.1 Atmos - Goki)[TAoE]': 'Mythic Quest',
-                    'Married.with.Children.NTSC.DVD.DD2.0.MPEG-2.REMUX-S0NNY': 'Married with Children'}
+
+    def validate(self):
+        if self.path == '':
+            return False
+        return True
 
     def scan(self):
-        struct = []
-        struct += get_files(self.path)
-        self.files = sorted(struct)
-        # self.discover_show()
+        if self.validate():
+            struct = []
+            struct += get_files(self.path)
+            self.files = sorted(struct)
 
     def discover_show(self, show_name, episode_key):
-        def similar(a, b):
-            p = round(SequenceMatcher(None, a, b).ratio(), 2)
-            return p
-
         mem = ['', -999.00]
         for file in self.files:
             new_file = self.shorten_path_to_file(file)
@@ -60,8 +57,6 @@ class Collection:
                 mem = [new_file, prob]
 
         return mem
-
-
 
     def shorten_path_to_file(self, file):
         return file.replace(self.path + os.path.sep, '')

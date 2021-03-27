@@ -7,7 +7,7 @@ import os
 import datetime
 
 class SeriesWatcher:
-    def __init__(self, port=81):
+    def __init__(self, port=81, collection_path=''):
         print('SeriesWatcher: __init__')
         self.sources_api = Sources()
         self.sources_api.set_source('tvmaze')
@@ -15,7 +15,7 @@ class SeriesWatcher:
         self.hidden = []
         self.cache = {}
         self.state = {}
-        self.collection_api = Collection('G:\\TV')
+        self.collection_api = Collection(collection_path)
         self.collection = {}
 
         self.read_config()
