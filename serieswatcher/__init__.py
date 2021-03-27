@@ -7,7 +7,7 @@ import os
 import datetime
 
 class SeriesWatcher:
-    def __init__(self):
+    def __init__(self, port=81):
         print('SeriesWatcher: __init__')
         self.sources_api = Sources()
         self.sources_api.set_source('tvmaze')
@@ -21,7 +21,7 @@ class SeriesWatcher:
         self.read_config()
         # self.refresh_cache()
         # self.verify_collection()
-        self.webserver = WebServer(self)
+        self.webserver = WebServer(self, port=port)
 
     def verify_collection(self):
         self.collection_api.scan()

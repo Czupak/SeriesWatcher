@@ -264,7 +264,7 @@ class RefreshHandler(BaseHandler, ABC):
 
 
 class WebServer:
-    def __init__(self, callback):
+    def __init__(self, callback, port=81):
         self.callback = callback
         ws_map = [
             (r"/", MainHandler, dict(cb=callback)),
@@ -288,7 +288,7 @@ class WebServer:
             (r"/assign_collection/([0-9]+)/([0-9]+)/([0-9]+)", AssignCollectionHandler, dict(cb=callback))
         ]
         self.app = self.make_app(ws_map)
-        self.app.listen(81)
+        self.app.listen(port)
 
     def make_app(self, ws_map):
         return tornado.web.Application(ws_map)
